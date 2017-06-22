@@ -36,8 +36,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.MalletLDA;
-import model.TCPMParameters;
+import model.TCPM.MalletLDA;
+import model.TCPM.PatientTraces;
+import model.TCPM.TCPMParameters;
+import model.TCPM.TopicSequence;
+import model.TCPM.TopicSequences;
 
 public class TCPMUI {
 	Stage stage;
@@ -51,6 +54,9 @@ public class TCPMUI {
 	File pditemFile;
 	ArrayList<String[]> id2itemArray;
 	ArrayList<String[]> pditemArray;
+
+	PatientTraces patientTraces;
+	TopicSequences topicSequences;
 
 	public TCPMParameters params = new TCPMParameters();
 
@@ -160,6 +166,8 @@ public class TCPMUI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
+				patientTraces = new PatientTraces(pditemArray);
 
 				ObservableList<ObservableList<String>> pditemData = FXCollections.observableArrayList();
 				for (String[] row : pditemArray) {
@@ -291,6 +299,8 @@ public class TCPMUI {
 				MalletLDA mlda = new MalletLDA(params);
 				try {
 					mlda.runLDA(id2itemFile, pditemFile);
+
+					//show topWords---------------------------------------------
 					String[][] topWords = mlda.topWords;
 					int rowNum = topWords.length; // topic num
 					int colNum = topWords[0].length;
@@ -342,6 +352,41 @@ public class TCPMUI {
 					tab3.setContent(topWordsTV);
 					tabPane.getTabs().add(tab3);
 					tabPane.getSelectionModel().select(tab3);
+
+					//show topicSequences---------------------------------------------
+					double[][] d2tDist = mlda.d2tDist;
+					topicSequences = new TopicSequences(patientTraces, d2tDist, params.thr);
+					String[] topicSequencesHeader = {"", "pID", "topic label"};
+					ObservableList<ObservableList<String>> tssData = FXCollections.observableArrayList();
+					for(int i = 0; i < topicSequences.sequences.size(); i++) {
+						TopicSequence ts = topicSequences.sequences.get(i);
+						String[] row = {i+"", ts.pID, ts.toString()};
+						tssData.add(FXCollections.observableArrayList(row));
+					}
+
+					TableView<ObservableList<String>> tssTV = new TableView<>();
+					tssTV.setItems(tssData);
+					for (int i = 0; i < topicSequencesHeader.length; i++) {
+						final int curCol = i;
+						final TableColumn<ObservableList<String>, String> column = new TableColumn<>(
+								topicSequencesHeader[curCol]);
+						column.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(curCol)));
+						tssTV.getColumns().add(column);
+					}
+
+					Tab tab4 = null;
+					for (int i = 0; i < tabPane.getTabs().size(); i++) {
+						String title = tabPane.getTabs().get(i).getText();
+						if (title.equals("topic sequences")) {
+							tab4 = tabPane.getTabs().get(i);
+						}
+					}
+
+					if (tab4 == null) {
+						tab4 = new Tab("topic sequences");
+					}
+					tab4.setContent(tssTV);
+					tabPane.getTabs().add(tab4);
 
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
