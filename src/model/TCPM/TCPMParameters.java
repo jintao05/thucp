@@ -1,4 +1,4 @@
-package model;
+package model.TCPM;
 
 public class TCPMParameters {
 	public double alpha, beta;

@@ -1,4 +1,4 @@
-package model;
+package model.TCPM;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +23,7 @@ public class MalletLDA {
 	public ParallelTopicModel model;
 	public Map<Integer, String> idx2word = new HashMap<Integer, String>();
 	public String[][] topWords;
+	public double[][] d2tDist;
 	public double alpha=1.0, beta=0.01;
 	public int K, iteration=2000, topK=50, threadNum=2;
 
@@ -114,5 +115,6 @@ public class MalletLDA {
 			}
 		}
 
+		d2tDist = model.getDocumentTopics(true, true);
 	}
 }
