@@ -1,6 +1,6 @@
 package view;
 
-import java.io.BufferedReader; 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -74,11 +74,13 @@ public class TCPMUI {
 				Button b3 = new Button("set params");
 				Button b4 = new Button("Run LDA!");
 				Button b5 = new Button("Run PM!");
+				Button b6 = new Button("Test~");
 				toolBar.getItems().add(b1);
 				toolBar.getItems().add(b2);
 				toolBar.getItems().add(b3);
 				toolBar.getItems().add(b4);
 				toolBar.getItems().add(b5);
+				toolBar.getItems().add(b6);
 
 				importId2Item(b1);
 				importPdItem(b2);
