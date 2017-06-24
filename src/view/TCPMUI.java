@@ -366,7 +366,7 @@ public class TCPMUI {
 					// topicSequences---------------------------------------------
 					double[][] d2tDist = mlda.d2tDist;
 					topicSequences = new TopicSequences(patientTraces, d2tDist, params.thr);
-					String[] topicSequencesHeader = { "", "pID", "topic label" };
+					String[] topicSequencesHeader = { "", "pID", "topic sequence" };
 					ObservableList<ObservableList<String>> tssData = FXCollections.observableArrayList();
 					for (int i = 0; i < topicSequences.sequences.size(); i++) {
 						TopicSequence ts = topicSequences.sequences.get(i);
@@ -471,6 +471,66 @@ public class TCPMUI {
 				tab5.setContent(tlTV);
 				tabPane.getTabs().add(tab5);
 				tabPane.getSelectionModel().select(tab5);
+
+				pm.removeLoop();
+				pm.mergeSubSequence();
+
+				Tab tab4 = null;
+				for (int i = 0; i < tabPane.getTabs().size(); i++) {
+					String title = tabPane.getTabs().get(i).getText();
+					if (title.equals("topic sequences")) {
+						tab4 = tabPane.getTabs().get(i);
+					}
+				}
+
+				TableView<ObservableList<String>> oriTSSTV = (TableView<ObservableList<String>>) tab4.getContent();
+				ObservableList<ObservableList<String>> oriTSSData = oriTSSTV.getItems();
+				ObservableList<ObservableList<String>> finalTSSData = FXCollections.observableArrayList();
+				for (ObservableList<String> oriTSData : oriTSSData) {
+					ObservableList<String> finalTSData = FXCollections.observableArrayList();
+					finalTSData.addAll(oriTSData);
+					String pID = oriTSData.get(1); // find the PID in the
+													// original tableview
+					TopicSequence finalTS = pm.maxTopicSequences.pID2sequence.get(pID);
+					finalTSData.add(finalTS.toString());
+					finalTSSData.add(finalTSData);
+				}
+
+				String[] finalTopicSequencesHeader = { "", "pID", "original topic sequence", "final topic sequence" };
+
+				TableView<ObservableList<String>> tssTV = new TableView<>();
+				tssTV.setItems(finalTSSData);
+				for (int i = 0; i < finalTopicSequencesHeader.length; i++) {
+					final int curCol = i;
+					final TableColumn<ObservableList<String>, String> column = new TableColumn<>(
+							finalTopicSequencesHeader[curCol]);
+					column.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(curCol)));
+					tssTV.getColumns().add(column);
+				}
+
+				Tab tab6 = null;
+				for (int i = 0; i < tabPane.getTabs().size(); i++) {
+					String title = tabPane.getTabs().get(i).getText();
+					if (title.equals("final topic sequences")) {
+						tab6 = tabPane.getTabs().get(i);
+					}
+				}
+
+				if (tab6 == null) {
+					tab6 = new Tab("final topic sequences");
+				}
+				tab6.setContent(tssTV);
+				tabPane.getTabs().add(tab6);
+
+				String xesFilePath = "./result/result.xes";
+				String discoFilePath = "./result/result.csv";
+				try {
+					pm.generateXESFile(xesFilePath);
+					pm.generateDiscoFile(discoFilePath);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
