@@ -6,6 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -38,6 +42,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.TCPM.MalletLDA;
 import model.TCPM.PatientTraces;
+import model.TCPM.ProcessMining;
 import model.TCPM.TCPMParameters;
 import model.TCPM.TopicSequence;
 import model.TCPM.TopicSequences;
@@ -55,6 +60,8 @@ public class TCPMUI {
 	ArrayList<String[]> id2itemArray;
 	ArrayList<String[]> pditemArray;
 
+	MalletLDA mlda;
+	ProcessMining pm;
 	PatientTraces patientTraces;
 	TopicSequences topicSequences;
 
@@ -90,6 +97,7 @@ public class TCPMUI {
 				importPdItem(b2);
 				setParams(b3);
 				runLDA(b4);
+				runPM(b5);
 			}
 		});
 	}
@@ -216,17 +224,17 @@ public class TCPMUI {
 				grid.setPadding(new Insets(20, 150, 10, 10));
 
 				TextField KTF = new TextField("3");
-				//KTF.setPromptText("K");
+				// KTF.setPromptText("K");
 				KTF.setPrefColumnCount(5);
 				TextField alphaTF = new TextField("1.0");
-				//alphaTF.setPromptText("1.0");
+				// alphaTF.setPromptText("1.0");
 				alphaTF.setPrefColumnCount(5);
 				TextField betaTF = new TextField("0.01");
-				//betaTF.setPromptText("0.01");
+				// betaTF.setPromptText("0.01");
 				betaTF.setPrefColumnCount(5);
 
-				grid.add(new Label("Parameters for LDA:"), 0, 0, 5, 1);		//row 0
-				grid.add(new Label("K: "), 0, 1);		//row 1
+				grid.add(new Label("Parameters for LDA:"), 0, 0, 5, 1); // row 0
+				grid.add(new Label("K: "), 0, 1); // row 1
 				grid.add(KTF, 1, 1);
 				grid.add(new Label("alpha:"), 2, 1);
 				grid.add(alphaTF, 3, 1);
@@ -234,41 +242,41 @@ public class TCPMUI {
 				grid.add(betaTF, 5, 1);
 
 				TextField iterationTF = new TextField("2000");
-				//iterationTF.setPromptText("2000");
+				// iterationTF.setPromptText("2000");
 				iterationTF.setPrefColumnCount(5);
 				TextField topKTF = new TextField("50");
-				//topKTF.setPromptText("50");
+				// topKTF.setPromptText("50");
 				topKTF.setPrefColumnCount(5);
 				TextField threadNumTF = new TextField("2");
-				//threadNumTF.setPromptText("2");
+				// threadNumTF.setPromptText("2");
 				threadNumTF.setPrefColumnCount(5);
 
-				grid.add(new Label("iteration: "), 0, 2);	//row 2
+				grid.add(new Label("iteration: "), 0, 2); // row 2
 				grid.add(iterationTF, 1, 2);
 				grid.add(new Label("topK:"), 2, 2);
 				grid.add(topKTF, 3, 2);
 				grid.add(new Label("threadNum:"), 4, 2);
 				grid.add(threadNumTF, 5, 2);
 
-				Separator sepa = new Separator();		//row 3
+				Separator sepa = new Separator(); // row 3
 				sepa.setOrientation(Orientation.HORIZONTAL);
-				//sepa.setHalignment(HPos.CENTER);
+				// sepa.setHalignment(HPos.CENTER);
 				grid.add(sepa, 0, 3, 7, 1);
 
-				grid.add(new Label("Parameters for PM:"), 0, 4, 5, 1);		//row 4
+				grid.add(new Label("Parameters for PM:"), 0, 4, 5, 1); // row 4
 
 				TextField thrTF = new TextField("0.5");
-				//thrTF.setPromptText("0.5");
+				// thrTF.setPromptText("0.5");
 				thrTF.setPrefColumnCount(5);
 				int mf = 0;
-				if(pditemArray != null && pditemArray.size() > 0) {
+				if (pditemArray != null && pditemArray.size() > 0) {
 					mf = (int) (pditemArray.size() * 0.01);
 				}
 				TextField minFreqTF = new TextField(mf + "");
-				//minFreqTF.setPromptText(mf + "");
+				// minFreqTF.setPromptText(mf + "");
 				minFreqTF.setPrefColumnCount(5);
 
-				grid.add(new Label("thr: "), 0, 5);	//row 5
+				grid.add(new Label("thr: "), 0, 5); // row 5
 				grid.add(thrTF, 1, 5);
 				grid.add(new Label("minFeq:"), 2, 5);
 				grid.add(minFreqTF, 3, 5);
@@ -296,11 +304,12 @@ public class TCPMUI {
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				MalletLDA mlda = new MalletLDA(params);
+				mlda = new MalletLDA(params);
 				try {
 					mlda.runLDA(id2itemFile, pditemFile);
 
-					//show topWords---------------------------------------------
+					// show
+					// topWords---------------------------------------------
 					String[][] topWords = mlda.topWords;
 					int rowNum = topWords.length; // topic num
 					int colNum = topWords[0].length;
@@ -353,14 +362,15 @@ public class TCPMUI {
 					tabPane.getTabs().add(tab3);
 					tabPane.getSelectionModel().select(tab3);
 
-					//show topicSequences---------------------------------------------
+					// show
+					// topicSequences---------------------------------------------
 					double[][] d2tDist = mlda.d2tDist;
 					topicSequences = new TopicSequences(patientTraces, d2tDist, params.thr);
-					String[] topicSequencesHeader = {"", "pID", "topic label"};
+					String[] topicSequencesHeader = { "", "pID", "topic sequence" };
 					ObservableList<ObservableList<String>> tssData = FXCollections.observableArrayList();
-					for(int i = 0; i < topicSequences.sequences.size(); i++) {
+					for (int i = 0; i < topicSequences.sequences.size(); i++) {
 						TopicSequence ts = topicSequences.sequences.get(i);
-						String[] row = {i+"", ts.pID, ts.toString()};
+						String[] row = { i + 1 + "", ts.pID, ts.toString() };
 						tssData.add(FXCollections.observableArrayList(row));
 					}
 
@@ -389,6 +399,135 @@ public class TCPMUI {
 					tabPane.getTabs().add(tab4);
 
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public void runPM(Button button) {
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				pm = new ProcessMining(topicSequences);
+				pm.calcLabels2Num();
+				pm.pruneNodes(params.minFreq);
+				Map<String, Integer> oriLabels2num = pm.oriLabels2num;
+				Map<String, String> ori2tgtLabels = pm.ori2tgtLabels;
+
+				String[] topicLabelHeader = { "", "topic label", "count", "target label" };
+				ObservableList<ObservableList<String>> tlData = FXCollections.observableArrayList();
+
+				// sort the map by value
+				List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(
+						oriLabels2num.entrySet());
+				Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+					@Override
+					public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+						// return o1.getValue().compareTo(o2.getValue());
+						return o2.getValue().compareTo(o1.getValue());
+					}
+				});
+
+				for (int i = 0; i < list.size(); i++) {
+					Map.Entry<String, Integer> en = list.get(i);
+					String key = en.getKey();
+					int value = en.getValue();
+					String tgtKey = "";
+					if (ori2tgtLabels.containsKey(key)) {
+						tgtKey = ori2tgtLabels.get(key);
+					}
+					String[] row = { i + 1 + "", key, value + "", tgtKey };
+					tlData.add(FXCollections.observableArrayList(row));
+				}
+
+				TableView<ObservableList<String>> tlTV = new TableView<>();
+				tlTV.setItems(tlData);
+				for (int i = 0; i < topicLabelHeader.length; i++) {
+					final int curCol = i;
+					final TableColumn<ObservableList<String>, String> column = new TableColumn<>(
+							topicLabelHeader[curCol]);
+					column.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(curCol)));
+					if (i == 0 || i == 2) {
+						column.setComparator((String o1, String o2) -> {
+							return Integer.compare(Integer.parseInt(o1), Integer.parseInt(o2));
+						});
+					}
+					tlTV.getColumns().add(column);
+				}
+
+				Tab tab5 = null;
+				for (int i = 0; i < tabPane.getTabs().size(); i++) {
+					String title = tabPane.getTabs().get(i).getText();
+					if (title.equals("topic labels")) {
+						tab5 = tabPane.getTabs().get(i);
+					}
+				}
+
+				if (tab5 == null) {
+					tab5 = new Tab("topic labels");
+				}
+				tab5.setContent(tlTV);
+				tabPane.getTabs().add(tab5);
+				tabPane.getSelectionModel().select(tab5);
+
+				pm.removeLoop();
+				pm.mergeSubSequence();
+
+				Tab tab4 = null;
+				for (int i = 0; i < tabPane.getTabs().size(); i++) {
+					String title = tabPane.getTabs().get(i).getText();
+					if (title.equals("topic sequences")) {
+						tab4 = tabPane.getTabs().get(i);
+					}
+				}
+
+				TableView<ObservableList<String>> oriTSSTV = (TableView<ObservableList<String>>) tab4.getContent();
+				ObservableList<ObservableList<String>> oriTSSData = oriTSSTV.getItems();
+				ObservableList<ObservableList<String>> finalTSSData = FXCollections.observableArrayList();
+				for (ObservableList<String> oriTSData : oriTSSData) {
+					ObservableList<String> finalTSData = FXCollections.observableArrayList();
+					finalTSData.addAll(oriTSData);
+					String pID = oriTSData.get(1); // find the PID in the
+													// original tableview
+					TopicSequence finalTS = pm.maxTopicSequences.pID2sequence.get(pID);
+					finalTSData.add(finalTS.toString());
+					finalTSSData.add(finalTSData);
+				}
+
+				String[] finalTopicSequencesHeader = { "", "pID", "original topic sequence", "final topic sequence" };
+
+				TableView<ObservableList<String>> tssTV = new TableView<>();
+				tssTV.setItems(finalTSSData);
+				for (int i = 0; i < finalTopicSequencesHeader.length; i++) {
+					final int curCol = i;
+					final TableColumn<ObservableList<String>, String> column = new TableColumn<>(
+							finalTopicSequencesHeader[curCol]);
+					column.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(curCol)));
+					tssTV.getColumns().add(column);
+				}
+
+				Tab tab6 = null;
+				for (int i = 0; i < tabPane.getTabs().size(); i++) {
+					String title = tabPane.getTabs().get(i).getText();
+					if (title.equals("final topic sequences")) {
+						tab6 = tabPane.getTabs().get(i);
+					}
+				}
+
+				if (tab6 == null) {
+					tab6 = new Tab("final topic sequences");
+				}
+				tab6.setContent(tssTV);
+				tabPane.getTabs().add(tab6);
+
+				String xesFilePath = "./result/result.xes";
+				String discoFilePath = "./result/result.csv";
+				try {
+					pm.generateXESFile(xesFilePath);
+					pm.generateDiscoFile(discoFilePath);
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

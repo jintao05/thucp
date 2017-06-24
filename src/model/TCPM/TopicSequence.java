@@ -12,6 +12,13 @@ public class TopicSequence {
 	public ArrayList<String> tLabels;
 	public double thr;
 
+	public TopicSequence(TopicSequence ts) {	//copy a TopicSequence
+		this.pID = ts.pID;
+		this.tLabels = new ArrayList<String>();
+		this.tLabels.addAll(ts.tLabels);
+		this.thr = ts.thr;
+	}
+
 	public TopicSequence(PatientTrace pt, double[][] d2tDist, int dayNo, double thr) {
 		this.pID = pt.pID;
 		this.thr = thr;
@@ -60,7 +67,7 @@ public class TopicSequence {
 		for (String tLabel : tLabels) {
 			str += tLabel + "\t";
 		}
-		str = str.substring(0, str.length()-1);
+		str = str.substring(0, str.length() - 1);
 
 		return str;
 	}

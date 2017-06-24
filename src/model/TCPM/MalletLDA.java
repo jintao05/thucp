@@ -108,7 +108,7 @@ public class MalletLDA {
 				try {
 					int idx = Integer.parseInt((String)tws[i][j]);
 					topWords[i][j] = idx + "\t" + idx2word.get(idx);
-				} catch (Exception e) {	//maybe cause java.lang.ArrayIndexOutOfBoundsException
+				} catch (Exception e) {	//may cause java.lang.ArrayIndexOutOfBoundsException
 					// TODO: handle exception
 					topWords[i][j] = "";
 				}
