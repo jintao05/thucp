@@ -12,11 +12,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import org.deckfour.xes.in.XParser;
+import org.deckfour.xes.in.XesXmlParser;
+import org.deckfour.xes.model.XLog;
+import org.processmining.models.heuristics.HeuristicsNet;
+import org.processmining.plugins.heuristicsnet.miner.heuristics.miner.FlexibleHeuristicsMinerPlugin;
+import org.processmining.plugins.heuristicsnet.visualizer.HeuristicsNetAnnotatedVisualization;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -149,7 +160,6 @@ public class TCPMUI {
 				tab1.setContent(id2itemTV);
 				tabPane.getTabs().add(tab1);
 				tabPane.getSelectionModel().select(tab1);
-
 				// --
 				stateLabel.setText("id2item row size: " + id2itemData.size());
 			}
@@ -527,10 +537,36 @@ public class TCPMUI {
 				try {
 					pm.generateXESFile(xesFilePath);
 					pm.generateDiscoFile(discoFilePath);
+
+					File file = new File("D:/result.xes");
+					XParser x = new XesXmlParser();
+					boolean flag = x.canParse(file);
+					List<XLog> xlogs = x.parse(file);
+
+					HeuristicsNet hNet = FlexibleHeuristicsMinerPlugin.run(null, xlogs.get(0));
+					JPanel pan = (JPanel) HeuristicsNetAnnotatedVisualization.visualize(null, hNet);
+
+					SwingNode swingNode = new SwingNode();
+					swingNode.setContent(pan);
+
+					Tab tab7 = null;
+					for (int i = 0; i < tabPane.getTabs().size(); i++) {
+						String title = tabPane.getTabs().get(i).getText();
+						if (title.equals("pm result")) {
+							tab7 = tabPane.getTabs().get(i);
+						}
+					}
+
+					if (tab7 == null) {
+						tab7 = new Tab("pm result");
+					}
+					tab7.setContent(swingNode);
+					tabPane.getTabs().add(tab7);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
 			}
 		});
 	}
