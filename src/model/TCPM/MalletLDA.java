@@ -19,6 +19,7 @@ import cc.mallet.pipe.iterator.CsvIterator;
 import cc.mallet.topics.ParallelTopicModel;
 import cc.mallet.types.InstanceList;
 
+
 public class MalletLDA {
 	public ParallelTopicModel model;
 	public Map<Integer, String> idx2word = new HashMap<Integer, String>();
