@@ -8,7 +8,12 @@ from 2009. However, most of current CPs are designed by experts mutually, so tha
 
 With the rapid growth of clinical informatics, data-driven methods that discovering knowledge from clinical data are receiving more and more attention. Our toolbox thucp presents a series of data mining and analysis approachs for various CP applications include: 
 
-  1. Execution Clinical Pathway Mining. An execution CP of a disease represents the most common clinical behaviors in the historical data. There are two core components for it: the kinds of behaviors and the relations between the behaviors. To achieve this goal, different clustering algorithms (k-means, topic modeling, association mining, etc) are firstly used for abstracting the complex clinical activities. Then, process mining methods are applied on these abstraction for deriving the temporal relations. 
+  1. Execution Clinical Pathway Mining. An execution CP of a disease represents the most common clinical behaviors in the historical data. There are two core components for it: the kinds of behaviors and the relations between the behaviors. To achieve this goal, different clustering algorithms (k-means, topic modeling, association rule mining, etc) are firstly used for abstracting the complex clinical activities. Then, process mining methods are applied on these abstractions for deriving temporal relations. 
   
-  2. 
-  3. 
+  2. Compliance Checking. Given an expert-designed or data-driven CP model, how can we evaluate the conformity degree between a patient record and the model. Various temporal analysis and process replay methods are presented for this task. 
+  
+  3. Clinical Desision Support. 
+  
+  4. Clinical Pathway Onotology. 
+
+## How to install it
