@@ -70,13 +70,13 @@ thucp基于Java开发，需要配置环境包括JRE(8u40或以上，内嵌JavaFX
 
 **引入项目**
 
-1. 从Git将项目导入Eclipse <https://github.com/jintao05/thucp.git><br>
+* 从Git将项目导入Eclipse <https://github.com/jintao05/thucp.git><br>
 ![git](https://github.com/jintao05/thucp/raw/master/img/git_import.png)
 
-2. 修改JRE版本<br>
+* 修改JRE版本<br>
 ![jre](https://github.com/jintao05/thucp/raw/master/img/jre_setting.png)
 
-3. 确保ivy加载完所有依赖库<br>
+* 确保ivy加载完所有依赖库<br>
 ![ivy](https://github.com/jintao05/thucp/raw/master/img/ivy_lib.png)
 
 
