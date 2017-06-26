@@ -60,6 +60,19 @@ thucp是一组基于Java开发的临床路径挖掘及分析工具集。
 <br>
 注：医疗日志数据，除特殊说明外，均指单一病种数据。
 
+## 快速开始
+
+thucp基于Java开发，需要配置环境包括JRE(8u40或以上，内嵌JavaFX)、ivy、JGraph，相关下载链接如下：
+
+* JRE: <http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html>
+* ivy: <http://ant.apache.org/ivy/download.cgi>
+* JGraph: <https://www.jgraph.com/downloads/jgraph/>
+
+将项目导入Eclipse
+
+
+
+
 ## What is thucp
 thucp is a set of java-based tools for Clinical Pathway (CP) mining and analysis. 
 
