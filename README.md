@@ -1,6 +1,6 @@
 # thucp
 
-<div align=center><img src="https://github.com/jintao05/thucp/raw/master/img/thucp_logo"/></div>
+<div align=center><img src="https://github.com/jintao05/thucp/raw/master/img/thucp_logo.jpg"/></div>
 
 ## 什么是thucp
 
