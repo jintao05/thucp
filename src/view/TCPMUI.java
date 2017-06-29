@@ -93,9 +93,9 @@ public class TCPMUI {
 					return;
 				}
 
-				Button b1 = new Button("import id2item");
-				Button b2 = new Button("import pditem");
-				Button b3 = new Button("set params");
+				Button b1 = new Button("导入id2item");
+				Button b2 = new Button("导入pditem");
+				Button b3 = new Button("设置参数");
 				Button b4 = new Button("Run LDA!");
 				Button b5 = new Button("Run PM!");
 				toolBar.getItems().add(b1);
@@ -243,7 +243,7 @@ public class TCPMUI {
 				// betaTF.setPromptText("0.01");
 				betaTF.setPrefColumnCount(5);
 
-				grid.add(new Label("Parameters for LDA:"), 0, 0, 5, 1); // row 0
+				grid.add(new Label("LDA参数:"), 0, 0, 5, 1); // row 0
 				grid.add(new Label("K: "), 0, 1); // row 1
 				grid.add(KTF, 1, 1);
 				grid.add(new Label("alpha:"), 2, 1);
@@ -273,7 +273,7 @@ public class TCPMUI {
 				// sepa.setHalignment(HPos.CENTER);
 				grid.add(sepa, 0, 3, 7, 1);
 
-				grid.add(new Label("Parameters for PM:"), 0, 4, 5, 1); // row 4
+				grid.add(new Label("PM参数:"), 0, 4, 5, 1); // row 4
 
 				TextField thrTF = new TextField("0.5");
 				// thrTF.setPromptText("0.5");
@@ -538,7 +538,7 @@ public class TCPMUI {
 					pm.generateXESFile(xesFilePath);
 					pm.generateDiscoFile(discoFilePath);
 
-					File file = new File("D:/result.xes");
+					File file = new File("./result/result.xes");
 					XParser x = new XesXmlParser();
 					boolean flag = x.canParse(file);
 					List<XLog> xlogs = x.parse(file);

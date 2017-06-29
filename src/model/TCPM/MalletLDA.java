@@ -86,7 +86,6 @@ public class MalletLDA {
 		// Note that the first parameter is passed as the sum over topics, while
 		// the second is the parameter for a single dimension of the Dirichlet
 		// prior.
-		K = 7;
 		model = new ParallelTopicModel(K, alpha, beta);
 
 		model.addInstances(instances);
