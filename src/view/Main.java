@@ -65,6 +65,8 @@ public class Main extends Application {
 			MenuItem menu11 = new MenuItem("LDA+PM");
 			MenuItem menu12 = new MenuItem("SS-LDA+PM");
 			MenuItem menu13 = new MenuItem("SSS-LDA+PM+SC");
+			
+			MenuItem menuwei1 = new MenuItem("LDA+CLUSTER+PM+REPLAY");
 
 			// Options menu
 			Menu menu1 = new Menu("TCPM");
@@ -72,7 +74,8 @@ public class Main extends Application {
 
 			Menu menu2 = new Menu("Haowei");
 			Menu menu3 = new Menu("Tianyu");
-			Menu menu4 = new Menu("Zhijie");
+			Menu menu4 = new Menu("OutlierDetection");
+			menu4.getItems().add(menuwei1);
 			Menu menu5 = new Menu("Junjie");
 
 			menuBar.getMenus().addAll(menu1, menu2, menu3, menu4, menu5);
@@ -92,6 +95,7 @@ public class Main extends Application {
 			final Scene scene = new Scene(vbox);
 
 			TCPMUI tcpmUI = new TCPMUI(primaryStage, scene, menu11, toolbar, tabPane, stateLabel);
+			OutlierDetectionUI outlierDetectionUI = new OutlierDetectionUI(primaryStage, scene, menuwei1, toolbar, tabPane, stateLabel);
 
 			primaryStage.setScene(scene);
 			primaryStage.show();
