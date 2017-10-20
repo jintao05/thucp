@@ -73,13 +73,13 @@ public class Main extends Application {
 			menu1.getItems().addAll(menu11, menu12, menu13);
 
 			
-			Menu menu2 = new Menu("2.Òì³£ÕïÁÆ¹ı³Ì·¢ÏÖ");
+			Menu menu2 = new Menu("2.å¼‚å¸¸è¯Šç–—è¿‡ç¨‹å‘ç°");
 			menu2.getItems().add(menuwei1);
-			Menu menu3 = new Menu("3.±¾µØ»¯ÁÙ´²Â·¾¶Ä£ĞÍÉè¼Æ");
-			Menu menu4 = new Menu("4.ºÏ¹æĞÔ¶ÈÁ¿");
-			Menu menu5 = new Menu("5.ºóĞøÂ·¾¶ÍÆ¼ö");
-			Menu menu6 = new Menu("6.ÕïÁÆ¹ı³Ì±È½Ï");
-			Menu menu7 = new Menu("7.ÁÙ´²Â·¾¶Ä£ĞÍ·ÖÎö");
+			Menu menu3 = new Menu("3.æœ¬åœ°åŒ–ä¸´åºŠè·¯å¾„æ¨¡å‹è®¾è®¡");
+			Menu menu4 = new Menu("4.åˆè§„æ€§åº¦é‡");
+			Menu menu5 = new Menu("5.åç»­è·¯å¾„æ¨è");
+			Menu menu6 = new Menu("6.è¯Šç–—è¿‡ç¨‹æ¯”è¾ƒ");
+			Menu menu7 = new Menu("7.ä¸´åºŠè·¯å¾„æ¨¡å‹åˆ†æ");
 
 			menuBar.getMenus().addAll(menu1, menu2, menu3, menu4, menu5);
 

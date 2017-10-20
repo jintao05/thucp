@@ -126,7 +126,7 @@ public class OutlierDetectionUI {
 				
 				grid.add(new Label("K: "), 0, 0); // row 1
 				grid.add(KofKmeans, 1, 0);
-				grid.add(new Label("KmeansÔËĞĞ´ÎÊı: "), 0, 1); // row 1
+				grid.add(new Label("Kmeansè¿è¡Œæ¬¡æ•°: "), 0, 1); // row 1
 				grid.add(KmeansRoundTimesParam, 1, 1);
 				dialog.getDialogPane().setContent(grid);
 				Platform.runLater(() -> KofKmeans.requestFocus());
@@ -165,7 +165,7 @@ public class OutlierDetectionUI {
 					bw_out.write("\"BRBM\",\"XM\",\"RQ\"");
 					bw_out.newLine();
 					for (Entry<Integer, List<Point>> entry : result.entrySet()) {
-						// System.out.println("===============¾Û´ØÖĞĞÄÎª£º" +
+						// System.out.println("===============èšç°‡ä¸­å¿ƒä¸ºï¼š" +
 						// entry.getKey() +
 						// "================");
 						// System.out.println(entry.getValue().size());
@@ -188,10 +188,10 @@ public class OutlierDetectionUI {
 					bw_out.close();
 					System.out.println("Kmeans++ completed!");
 					
-					//±£´æ¸÷Àà´ØµÄÖ÷Ìâ´ú±í
+					//ä¿å­˜å„ç±»ç°‡çš„ä¸»é¢˜ä»£è¡¨
 					GetLabelForCluster ins=new GetLabelForCluster();
-					ins.getClusterToItems(result,topic2itemsFilePah,clusterToItemsFilePath, 10,logPath,docToTopicPath,corpusFilePath,KLDA,KKmeans);//Ã¿¸ötopic£¬×î¶àÑ¡10¸ö´ú±í´Ê
-					System.out.println("±£´æ¸÷Àà´ØµÄÖ÷Ìâ´ú±í completed!");
+					ins.getClusterToItems(result,topic2itemsFilePah,clusterToItemsFilePath, 10,logPath,docToTopicPath,corpusFilePath,KLDA,KKmeans);//æ¯ä¸ªtopicï¼Œæœ€å¤šé€‰10ä¸ªä»£è¡¨è¯
+					System.out.println("ä¿å­˜å„ç±»ç°‡çš„ä¸»é¢˜ä»£è¡¨ completed!");
 					Text t = new Text();
 					readFromClusterToItems(clusterToItemsFilePath,t);
 					
