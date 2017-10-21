@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GetLabelForCluster {//Ã¿¸öclusterµÄlabel½ö¹©²Î¿¼£¬Ä¿µÄÊÇÁË½â¸Ãcluster´óÖÂÊÇ×öÊ²Ã´ÕïÁÆ
+public class GetLabelForCluster {//æ¯ä¸ªclusterçš„labelä»…ä¾›å‚è€ƒï¼Œç›®çš„æ˜¯äº†è§£è¯¥clusterå¤§è‡´æ˜¯åšä»€ä¹ˆè¯Šç–—
 	public Comparator<EntityTopicFreq> com=new Comparator<EntityTopicFreq>() {
 		
 		@Override
@@ -24,7 +24,7 @@ public class GetLabelForCluster {//Ã¿¸öclusterµÄlabel½ö¹©²Î¿¼£¬Ä¿µÄÊÇÁË½â¸Ãclust
 	};
 //	public static void main(String[] args) throws IOException{
 //		GetLabelForCluster ins=new GetLabelForCluster();
-//		ins.getClusterToItems("D:/data4code/dataclean/topic","D:/data4code/cluster/clusterToItems.csv", 10);//Ã¿¸ötopic£¬×î¶àÑ¡10¸ö´ú±í´Ê
+//		ins.getClusterToItems("D:/data4code/dataclean/topic","D:/data4code/cluster/clusterToItems.csv", 10);//æ¯ä¸ªtopicï¼Œæœ€å¤šé€‰10ä¸ªä»£è¡¨è¯
 //	}
 	public Map<String,ArrayList<String>> getClusterToDays(String filename) throws IOException{
 		Map<String,ArrayList<String>> re=new HashMap<String,ArrayList<String>>();
@@ -99,7 +99,7 @@ public class GetLabelForCluster {//Ã¿¸öclusterµÄlabel½ö¹©²Î¿¼£¬Ä¿µÄÊÇÁË½â¸Ãclust
 		}
 		return re;
 	}
-	public Map<String,ArrayList<String>> getClusterToTopics(Integer clusterSize,Integer TopicSize,double theta, double ratio,String logPath ,String docToTopicPath,String corpusFilePath) throws IOException{//ratioº¬Òå¼ûº¯ÊıÖĞ×¢ÊÍ//KÎªkmeans´ØµÄ¸öÊı
+	public Map<String,ArrayList<String>> getClusterToTopics(Integer clusterSize,Integer TopicSize,double theta, double ratio,String logPath ,String docToTopicPath,String corpusFilePath) throws IOException{//ratioï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½//KÎªkmeansï¿½ØµÄ¸ï¿½ï¿½ï¿½
 		Map<String,ArrayList<String>> re=new HashMap<String,ArrayList<String>>();
 		Map<String,ArrayList<String>> clusterToDays=getClusterToDays(logPath);//("D:/data4code/cluster/LogBasedOnKmeansPlusPlus-14.csv");
 		Map<String, ArrayList<Double>> dayToTopic=getDayToTopic(docToTopicPath,corpusFilePath);//("D:/data4code/dataclean/topic/docToTopic.csv","D:/data4code/dataclean/corpus");
@@ -125,7 +125,7 @@ public class GetLabelForCluster {//Ã¿¸öclusterµÄlabel½ö¹©²Î¿¼£¬Ä¿µÄÊÇÁË½â¸Ãclust
 			}
 			Collections.sort(forSort,com);
 			double sum=0;
-			double mean=1.0/TopicSize*ratio;//µ±¸ÅÂÊĞ¡ÓÚÆ½¾ùÖµµÄratio±¶Ê±ÔòÈÏÎª¸ÃÖ÷ÌâÓëµ±ÌìÕïÁÆ»î¶¯ÎŞ¹Ø
+			double mean=1.0/TopicSize*ratio;//å½“æ¦‚ç‡å°äºå¹³å‡å€¼çš„ratioå€æ—¶åˆ™è®¤ä¸ºè¯¥ä¸»é¢˜ä¸å½“å¤©è¯Šç–—æ´»åŠ¨æ— å…³
 			ArrayList<String> eachClusterToTopic=new ArrayList<String>();
 			for(EntityTopicFreq e:forSort){
 				sum+=e.freq;
@@ -144,7 +144,7 @@ public class GetLabelForCluster {//Ã¿¸öclusterµÄlabel½ö¹©²Î¿¼£¬Ä¿µÄÊÇÁË½â¸Ãclust
 		for(Integer i=0;i<clusterToTopics.size();i++){
 			String temp="";
 			String key=i.toString();
-			temp+="cluster-"+key+" ( Àà´Ø´óĞ¡:"+result.get(i).size()+")"+"\n";
+			temp+="cluster-"+key+" ( ç±»ç°‡å¤§å°:"+result.get(i).size()+")"+"\n";
 			ArrayList<String> value=clusterToTopics.get(key);
 			for(String eachTopic:value){
 				temp+="topic-"+eachTopic+": ";

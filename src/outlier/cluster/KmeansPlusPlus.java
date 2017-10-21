@@ -30,7 +30,7 @@ public class KmeansPlusPlus {
 	}
 
 	/**
-	 * ³õÊ¼»¯Êı¾İ¼¯
+	 * åˆå§‹åŒ–æ•°æ®é›†
 	 * 
 	 * @throws IOException
 	 */
@@ -75,11 +75,11 @@ public class KmeansPlusPlus {
 
 	/**
 	 * @param k
-	 *            ¾ÛÀàµÄÊıÄ¿
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
 	 */
 	public Map<Integer, List<Point>> kcluster(int k) {
-		// Ëæ»ú´ÓÑù±¾¼¯ºÏÖĞÑ¡È¡k¸öÑù±¾µã×÷Îª¾Û´ØÖĞĞÄ
-		// Ã¿¸ö¾Û´ØÖĞĞÄÓĞÄÄĞ©µã
+		// éšæœºä»æ ·æœ¬é›†åˆä¸­é€‰å–kä¸ªæ ·æœ¬ç‚¹ä½œä¸ºèšç°‡ä¸­å¿ƒ
+		// æ¯ä¸ªèšç°‡ä¸­å¿ƒæœ‰å“ªäº›ç‚¹
 		Set<Integer> set = new HashSet<Integer>();
 		Map<Integer, List<Point>> nowClusterCenterMap = new HashMap<Integer, List<Point>>();
 		List<Point> nowCenter = new ArrayList<Point>();
@@ -122,10 +122,10 @@ public class KmeansPlusPlus {
 			nowCenter.add(dataset.get(candinate.get(h+1)));
 		}
 
-		// ÉÏÒ»´ÎµÄ¾Û´ØÖĞĞÄ
+		// ä¸Šä¸€æ¬¡çš„èšç°‡ä¸­å¿ƒ
 		Map<Integer, List<Point>> lastClusterCenterMap = null;
 
-		// ÕÒµ½ÀëÖĞĞÄ×î½üµÄµã,È»ºó¼ÓÈëÒÔ¸ÃÖĞĞÄÎªmap¼üµÄlistÖĞ
+		// æ‰¾åˆ°ç¦»ä¸­å¿ƒæœ€è¿‘çš„ç‚¹,ç„¶ååŠ å…¥ä»¥è¯¥ä¸­å¿ƒä¸ºmapé”®çš„listä¸­
 		while (true) {
 			for (Point point : dataset) {
 				double shortest = Double.MAX_VALUE;
@@ -145,7 +145,7 @@ public class KmeansPlusPlus {
 					nowClusterCenterMap.put(key, temp);
 				}
 			}
-			// Èç¹û½á¹ûÓëÉÏÒ»´ÎÏàÍ¬£¬ÔòÕû¸ö¹ı³Ì½áÊø
+			// å¦‚æœç»“æœä¸ä¸Šä¸€æ¬¡ç›¸åŒï¼Œåˆ™æ•´ä¸ªè¿‡ç¨‹ç»“æŸ
 			if (isEqualCenter(nowCenter, lastCenter)) {
 				break;
 			}
@@ -160,7 +160,7 @@ public class KmeansPlusPlus {
 			lastCenter = nowCenter;
 			nowClusterCenterMap = new HashMap<Integer, List<Point>>();
 			nowCenter = new ArrayList<Point>();
-			// °ÑÖĞĞÄµãÒÆµ½ÆäËùÓĞ³ÉÔ±µÄÆ½¾ùÎ»ÖÃ´¦,²¢¹¹½¨ĞÂµÄ¾Û´ØÖĞĞÄ
+			// æŠŠä¸­å¿ƒç‚¹ç§»åˆ°å…¶æ‰€æœ‰æˆå‘˜çš„å¹³å‡ä½ç½®å¤„,å¹¶æ„å»ºæ–°çš„èšç°‡ä¸­å¿ƒ
 			for (int i = 0; i < lastCenter.size(); i++) {
 				List<Point> temp = lastClusterCenterMap.get(i);
 				if (temp == null || temp.size() == 0) {
@@ -177,7 +177,7 @@ public class KmeansPlusPlus {
 	}
 
 	/**
-	 * ÅĞ¶ÏÇ°ºóÁ½´ÎÊÇ·ñÊÇÏàÍ¬µÄ¾Û´ØÖĞĞÄ£¬ÈôÊÇÔò³ÌĞò½áÊø£¬·ñÔò¼ÌĞø,ÖªµÀÏàÍ¬
+	 * åˆ¤æ–­å‰åä¸¤æ¬¡æ˜¯å¦æ˜¯ç›¸åŒçš„èšç°‡ä¸­å¿ƒï¼Œè‹¥æ˜¯åˆ™ç¨‹åºç»“æŸï¼Œå¦åˆ™ç»§ç»­,çŸ¥é“ç›¸åŒ
 	 * 
 	 * @param lastClusterCenterMap
 	 * @param nowClusterCenterMap
@@ -196,7 +196,7 @@ public class KmeansPlusPlus {
 	}
 
 	/**
-	 * ¼ÆËãĞÂµÄÖĞĞÄ
+	 * è®¡ç®—æ–°çš„ä¸­å¿ƒ
 	 * 
 	 * @param value
 	 * @return Point
@@ -217,11 +217,11 @@ public class KmeansPlusPlus {
 	}
 
 	/**
-	 * Ê¹ÓÃÅ·¼¸ÀïµÃËã·¨¼ÆËãÁ½µãÖ®¼ä¾àÀë
+	 * ä½¿ç”¨æ¬§å‡ é‡Œå¾—ç®—æ³•è®¡ç®—ä¸¤ç‚¹ä¹‹é—´è·ç¦»
 	 * 
 	 * @param point1
 	 * @param point2
-	 * @return Á½µãÖ®¼ä¾àÀë
+	 * @return ä¸¤ç‚¹ä¹‹é—´è·ç¦»
 	 */
 	private double distance(Point point1, Point point2) {
 		ArrayList<Double> x1 = point1.value;
@@ -269,7 +269,7 @@ public class KmeansPlusPlus {
 //		bw_out.write("\"BRBM\",\"XM\",\"RQ\"");
 //		bw_out.newLine();
 //		for (Entry<Integer, List<Point>> entry : result.entrySet()) {
-//			// System.out.println("===============¾Û´ØÖĞĞÄÎª£º" + entry.getKey() +
+//			// System.out.println("===============ï¿½Û´ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½" + entry.getKey() +
 //			// "================");
 //			// System.out.println(entry.getValue().size());
 //			for (Point point : entry.getValue()) {

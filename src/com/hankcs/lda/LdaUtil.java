@@ -58,7 +58,8 @@ public class LdaUtil
         }
     	File file_out = new File("data/OutlierDetection/topic/doc2topics/docToTopic.csv");
         try {
-        	BufferedWriter bw_out = new BufferedWriter(new FileWriter(file_out, false));//
+//        	BufferedWriter bw_out = new BufferedWriter(new FileWriter(file_out, false));//
+        	BufferedWriter bw_out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file_out), "UTF-8"));//
         	for(Map<String, Double> map:result){
         		for (Map.Entry<String, Double> entry : map.entrySet()){
         			bw_out.write(entry.toString()+",");
@@ -126,8 +127,9 @@ public class LdaUtil
 //            System.out.println(i+":");
             i++;
             try {
-            	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file_out), Charset.forName("gb2312")));
-				int j=0;
+//            	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file_out), Charset.forName("gb2312")));
+            	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file_out), "UTF-8"));//
+            	int j=0;
             	for (Map.Entry<String, Double> entry : topicMap.entrySet()){
 					bw.write(entry.toString());
 //					if(j<15)

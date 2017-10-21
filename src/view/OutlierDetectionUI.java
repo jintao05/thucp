@@ -5,10 +5,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,7 +163,8 @@ public class OutlierDetectionUI {
 							continue;
 					}
 					File file_out = new File( logFilePathForSave+ minIndex + ".csv");
-					BufferedWriter bw_out = new BufferedWriter(new FileWriter(file_out, false));//
+//					BufferedWriter bw_out = new BufferedWriter(new FileWriter(file_out, false));//
+					BufferedWriter bw_out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file_out), "UTF-8"));//
 					bw_out.write("\"BRBM\",\"XM\",\"RQ\"");
 					bw_out.newLine();
 					for (Entry<Integer, List<Point>> entry : result.entrySet()) {
