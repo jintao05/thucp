@@ -15,12 +15,12 @@ import java.util.Optional;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.deckfour.xes.in.XParser;
-import org.deckfour.xes.in.XesXmlParser;
-import org.deckfour.xes.model.XLog;
-import org.processmining.models.heuristics.HeuristicsNet;
-import org.processmining.plugins.heuristicsnet.miner.heuristics.miner.FlexibleHeuristicsMinerPlugin;
-import org.processmining.plugins.heuristicsnet.visualizer.HeuristicsNetAnnotatedVisualization;
+//import org.deckfour.xes.in.XParser;
+//import org.deckfour.xes.in.XesXmlParser;
+//import org.deckfour.xes.model.XLog;
+//import org.processmining.models.heuristics.HeuristicsNet;
+//import org.processmining.plugins.heuristicsnet.miner.heuristics.miner.FlexibleHeuristicsMinerPlugin;
+//import org.processmining.plugins.heuristicsnet.visualizer.HeuristicsNetAnnotatedVisualization;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -93,9 +93,9 @@ public class TCPMUI {
 					toolBar.getItems().clear();
 				}
 
-				Button b1 = new Button("import id2item");
-				Button b2 = new Button("import pditem");
-				Button b3 = new Button("set params");
+				Button b1 = new Button("导入id2item");
+				Button b2 = new Button("导入pditem");
+				Button b3 = new Button("设置参数");
 				Button b4 = new Button("Run LDA!");
 				Button b5 = new Button("Run PM!");
 				toolBar.getItems().add(b1);
@@ -243,7 +243,7 @@ public class TCPMUI {
 				// betaTF.setPromptText("0.01");
 				betaTF.setPrefColumnCount(5);
 
-				grid.add(new Label("Parameters for LDA:"), 0, 0, 5, 1); // row 0
+				grid.add(new Label("LDA参数:"), 0, 0, 5, 1); // row 0
 				grid.add(new Label("K: "), 0, 1); // row 1
 				grid.add(KTF, 1, 1);
 				grid.add(new Label("alpha:"), 2, 1);
@@ -273,7 +273,7 @@ public class TCPMUI {
 				// sepa.setHalignment(HPos.CENTER);
 				grid.add(sepa, 0, 3, 7, 1);
 
-				grid.add(new Label("Parameters for PM:"), 0, 4, 5, 1); // row 4
+				grid.add(new Label("PM参数:"), 0, 4, 5, 1); // row 4
 
 				TextField thrTF = new TextField("0.5");
 				// thrTF.setPromptText("0.5");
@@ -538,30 +538,30 @@ public class TCPMUI {
 					pm.generateXESFile(xesFilePath);
 					pm.generateDiscoFile(discoFilePath);
 
-					File file = new File("D:/result.xes");
-					XParser x = new XesXmlParser();
-					boolean flag = x.canParse(file);
-					List<XLog> xlogs = x.parse(file);
-
-					HeuristicsNet hNet = FlexibleHeuristicsMinerPlugin.run(null, xlogs.get(0));
-					JPanel pan = (JPanel) HeuristicsNetAnnotatedVisualization.visualize(null, hNet);
-
-					SwingNode swingNode = new SwingNode();
-					swingNode.setContent(pan);
-
-					Tab tab7 = null;
-					for (int i = 0; i < tabPane.getTabs().size(); i++) {
-						String title = tabPane.getTabs().get(i).getText();
-						if (title.equals("pm result")) {
-							tab7 = tabPane.getTabs().get(i);
-						}
-					}
-
-					if (tab7 == null) {
-						tab7 = new Tab("pm result");
-					}
-					tab7.setContent(swingNode);
-					tabPane.getTabs().add(tab7);
+//					File file = new File("./result/result.xes");
+//					XParser x = new XesXmlParser();
+//					boolean flag = x.canParse(file);
+//					List<XLog> xlogs = x.parse(file);
+//
+//					HeuristicsNet hNet = FlexibleHeuristicsMinerPlugin.run(null, xlogs.get(0));
+//					JPanel pan = (JPanel) HeuristicsNetAnnotatedVisualization.visualize(null, hNet);
+//
+//					SwingNode swingNode = new SwingNode();
+//					swingNode.setContent(pan);
+//
+//					Tab tab7 = null;
+//					for (int i = 0; i < tabPane.getTabs().size(); i++) {
+//						String title = tabPane.getTabs().get(i).getText();
+//						if (title.equals("pm result")) {
+//							tab7 = tabPane.getTabs().get(i);
+//						}
+//					}
+//
+//					if (tab7 == null) {
+//						tab7 = new Tab("pm result");
+//					}
+//					tab7.setContent(swingNode);
+//					tabPane.getTabs().add(tab7);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

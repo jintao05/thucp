@@ -33,7 +33,7 @@ public class Main extends Application {
 	public Parent createContent() {
 		final String os = System.getProperty("os.name");
 		VBox vbox = new VBox(20);
-		vbox.setPrefSize(800, 600);
+		vbox.setPrefSize(1000, 800);
 		final Label outputLabel = new Label();
 		final MenuBar menuBar = new MenuBar();
 
@@ -55,7 +55,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			VBox vbox = new VBox();
-			vbox.setPrefSize(800, 600);
+			vbox.setPrefSize(1000, 800);
 			vbox.setSpacing(5);
 			vbox.setPadding(new Insets(5, 0, 5, 0));
 			final Label outputLabel = new Label();
@@ -69,19 +69,17 @@ public class Main extends Application {
 			MenuItem menuwei1 = new MenuItem("LDA+CLUSTER+PM+REPLAY");
 
 			// Options menu
-			Menu menu1 = new Menu("TCPM");
+			Menu menu1 = new Menu("1.临床路径模型挖掘");
 			menu1.getItems().addAll(menu11, menu12, menu13);
 
-			
 			Menu menu2 = new Menu("2.异常诊疗过程发现");
-			menu2.getItems().add(menuwei1);
 			Menu menu3 = new Menu("3.本地化临床路径模型设计");
 			Menu menu4 = new Menu("4.合规性度量");
 			Menu menu5 = new Menu("5.后续路径推荐");
 			Menu menu6 = new Menu("6.诊疗过程比较");
 			Menu menu7 = new Menu("7.临床路径模型分析");
 
-			menuBar.getMenus().addAll(menu1, menu2, menu3, menu4, menu5);
+			menuBar.getMenus().addAll(menu1, menu2, menu3, menu4, menu5, menu6, menu7);
 
 			ToolBar toolbar = new ToolBar();
 
