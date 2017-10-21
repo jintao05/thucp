@@ -73,6 +73,7 @@ public class Main extends Application {
 			menu1.getItems().addAll(menu11, menu12, menu13);
 
 			Menu menu2 = new Menu("2.异常诊疗过程发现");
+			menu2.getItems().add(menuwei1);
 			Menu menu3 = new Menu("3.本地化临床路径模型设计");
 			Menu menu4 = new Menu("4.合规性度量");
 			Menu menu5 = new Menu("5.后续路径推荐");
