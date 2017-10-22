@@ -65,6 +65,8 @@ public class Main extends Application {
 			MenuItem menu11 = new MenuItem("LDA+PM");
 			MenuItem menu12 = new MenuItem("SS-LDA+PM");
 			MenuItem menu13 = new MenuItem("SSS-LDA+PM+SC");
+			
+			MenuItem menuwei1 = new MenuItem("LDA+CLUSTER+PM+REPLAY");
 
 			//Options->Submenu 3 submenu
 			MenuItem menu31 = new MenuItem("CPMRM");
@@ -76,6 +78,7 @@ public class Main extends Application {
 			menu1.getItems().addAll(menu11, menu12, menu13);
 
 			Menu menu2 = new Menu("2.异常诊疗过程发现");
+			menu2.getItems().add(menuwei1);
 			Menu menu3 = new Menu("3.本地化临床路径模型设计");
 			menu3.getItems().addAll(menu31);
 			Menu menu4 = new Menu("4.合规性度量");
@@ -100,8 +103,12 @@ public class Main extends Application {
 			final Scene scene = new Scene(vbox);
 
 			TCPMUI tcpmUI = new TCPMUI(primaryStage, scene, menu11, toolbar, tabPane, stateLabel);
+
 			CPMRMUI cpmrmUI = new CPMRMUI(primaryStage, scene, menu31, toolbar, tabPane, stateLabel);
-			
+		
+      OutlierDetectionUI outlierDetectionUI = new OutlierDetectionUI(primaryStage, scene, menuwei1, toolbar, tabPane, stateLabel);
+
+
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {
