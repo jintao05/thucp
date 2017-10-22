@@ -90,7 +90,7 @@ public class TCPMUI {
 			@Override
 			public void handle(ActionEvent event) {
 				if (toolBar.getItems().size() != 0) {
-					return;
+					toolBar.getItems().clear();
 				}
 
 				Button b1 = new Button("导入id2item");
